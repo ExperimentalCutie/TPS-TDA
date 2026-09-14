@@ -10,16 +10,41 @@ class EP {
         PrintWriter printer = new PrintWriter(bw);
         int n = scanner.nextInt();
         long mesas = 0;
+        ArrayList<Integer> raices = new ArrayList<>();
+        ArrayList<Boolean> visitados = new ArrayList<>();
         ArrayList<ArrayList<Integer>> aristas = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i <= n; i++) {   ///creo la lista de madres
             aristas.add(new ArrayList<>());
         }
-        for (int i = 0; i < n; i++) {
+        for (int i = 1; i <= n; i++) {    ///creo la lista de hijos
             int madre = scanner.nextInt();
-            madre = madre - 1;  
-            aristas.get(madre).add(i+1);
+            if (madre >= 1) {
+                aristas.get(madre).add(i); // desfase(?)
+            }
+            else {   
+                raices.add(i);  ///ubico las raices para empezar el bfs
+            }           
+            //// se crea la estructura completa
         }
-        printer.println(aristas);
+        for (int i = 0; i < raices.size(); i++) {
+            int altura = 0;
+            Queue<Integer> cola = new LinkedList<>();
+            cola.add(raices.get(i));
+            while (!cola.isEmpty()) {
+               int nodo = cola.poll();       
+               for (int j = 0; j < aristas.get(nodo).size(); j++) {
+                   cola.add(aristas.get(nodo).get(j));
+                   
+               }
+               altura ++;     //la altura se repite por cada hijo - deberia ser por nivel
+            }
+            if (altura > mesas) {
+                mesas = altura;
+            }
+        }
+
+        
+        printer.println(mesas);
         printer.flush();
         printer.close();
     }
