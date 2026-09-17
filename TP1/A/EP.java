@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;     
 
-class EP {
+public class EP {
     public static void main(String[] args) {
         
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -31,12 +31,15 @@ class EP {
             Queue<Integer> cola = new LinkedList<>();
             cola.add(raices.get(i));
             while (!cola.isEmpty()) {
-               int nodo = cola.poll();       
-               for (int j = 0; j < aristas.get(nodo).size(); j++) {
-                   cola.add(aristas.get(nodo).get(j));
+                int CantidadHijosNivel = cola.size();  //cantidad de hijos por nivel  
+                for (int k = 0; k < CantidadHijosNivel; k++) {
+                    int nodo = cola.poll();  
+                    for (int j = 0; j < aristas.get(nodo).size(); j++) {
+                         cola.add(aristas.get(nodo).get(j));
                    
-               }
-               altura ++;     //la altura se repite por cada hijo - deberia ser por nivel
+                    }
+                } 
+                altura ++;     //la altura se repite por cada hijo - deberia ser por nivel
             }
             if (altura > mesas) {
                 mesas = altura;
